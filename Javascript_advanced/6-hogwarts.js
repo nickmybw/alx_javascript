@@ -1,11 +1,39 @@
-console.log("Start of the execution queue");
+var studentHogwarts = function () {
+  var privateScore = 0;
+  var name = null;
 
-setTimeout(function () {
-  console.log("Final code block to be executed");
-}, 0);
+  function changeScoreBy(points) {
+    privateScore += points;
+  }
 
-for (let i = 1; i <= 100; i++) {
-  console.log(i);
-}
+  return {
+    setName: function (newName) {
+      name = newName;
+    },
+    rewardStudent: function () {
+      changeScoreBy(1);
+    },
+    penalizeStudent: function () {
+      changeScoreBy(-1);
+    },
+    getScore: function () {
+      return name + ": " + privateScore;
+    },
+  };
+};
 
-console.log("End of the loop printing");
+var harry = studentHogwarts();
+harry.setName("Harry");
+harry.rewardStudent();
+harry.rewardStudent();
+harry.rewardStudent();
+harry.rewardStudent();
+console.log(harry.getScore());
+
+var draco = studentHogwarts();
+draco.setName("Draco");
+draco.rewardStudent();
+draco.penalizeStudent();
+draco.penalizeStudent();
+draco.penalizeStudent();
+console.log(draco.getScore());
