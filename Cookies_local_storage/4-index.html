@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Application</title>
+    <style>
+        /* Add some basic styles for the form */
+        form {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Add a style for the logout link */
+        a.logout {
+            font-style: italic;
+            margin-left: 10px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mini Application</h1>
+
+    <div id="loginForm">
+        <h2>Login Form</h2>
+        <form>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname">
+            <br>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" autocomplete="email">
+            <br>
+            <button type="button" onclick="setCookiesAndShowWelcomeMessage()">Log me in</button>
+        </form>
+    </div>
+
+    <div id="welcomeMessage"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script>
+        function setCookiesAndShowWelcomeMessage() {
+            const firstNameInput = document.getElementById("firstname");
+            const emailInput = document.getElementById("email");
+
+            const firstNameValue = firstNameInput.value;
+            const emailValue = emailInput.value;
+
+            // Calculate the expiration date (10 days from now)
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 10);
+
+            // Set the cookies with js-cookie
+            Cookies.set('firstname', firstNameValue, { expires: expirationDate, path: '/' });
+            Cookies.set('email', emailValue, { expires: expirationDate, path: '/' });
+
+            // Clear input fields
+            firstNameInput.value = "";
+            emailInput.value = "";
+
+            // Show the welcome message
+            showWelcomeMessageOrForm();
+        }
+
+        function deleteCookiesAndShowForm() {
+            // Delete the cookies with js-cookie
+            Cookies.remove('firstname', { path: '/' });
+            Cookies.remove('email', { path: '/' });
+
+            // Hide the welcome message
+            hideWelcomeMessage();
+
+            // Show the login form
+            showForm();
+        }
+
+        function showForm() {
+            const form = document.querySelector("form");
+            form.style.display = "block";
+        }
+
+        function hideForm() {
+            const form = document.querySelector("form");
+            form.style.display = "none";
+        }
+
+        function showWelcomeMessageOrForm() {
+            const firstName = Cookies.get('firstname');
+
+            if (firstName) {
+                // User is logged in, show welcome message
+                hideForm();
+                showWelcomeMessage(firstName);
+            } else {
+                // User is not logged in, show login form
+                showForm();
+                hideWelcomeMessage();
+            }
+        }
+
+        function showWelcomeMessage(firstName) {
+            const welcomeMessageDiv = document.getElementById("welcomeMessage");
+            welcomeMessageDiv.innerHTML = `<h1>Welcome ${firstName}<a class="logout" href="#" onclick="deleteCookiesAndShowForm()"> (logout)</a></h1>`;
+        }
+
+        function hideWelcomeMessage() {
+            const welcomeMessageDiv = document.getElementById("welcomeMessage");
+            welcomeMessageDiv.innerHTML = "";
+        }
+
+        // Initialize the page
+        showWelcomeMessageOrForm();
+    </script>
+</body>
+</html>
