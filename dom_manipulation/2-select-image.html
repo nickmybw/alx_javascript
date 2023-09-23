@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modifying Elements</title>
+  <style>
+    img {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <img id="myImage" src="https://picsum.photos/200/300" alt="My Image">
+  
+  <script>
+    // Select the <img> element by its id and store it in a variable
+var myImageElement = document.getElementById("myImage");
+
+// Check if the element exists
+if (myImageElement) {
+  // Modify the src attribute
+  myImageElement.src = "https://picsum.photos/200/301";
+
+  // Modify the alt attribute
+  myImageElement.alt = "New image";
+
+  // Modify the border style
+  myImageElement.style.border = "2px solid red";
+} else {
+  console.error("Element with id 'myImage' not found.");
+}
+
+  </script>
+</body>
+</html>

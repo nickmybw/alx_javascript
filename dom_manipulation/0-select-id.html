@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DOM Introduction</title>
+</head>
+<body>
+  <p id="myParagraph">This is a paragraph.</p>
+  
+  <script>
+    // Select the element by its id and store it in a variable
+var paragraphElement = document.getElementById("myParagraph");
+
+// Check if the element exists
+if (paragraphElement) {
+  // Modify the content of the <p> element
+  paragraphElement.textContent = "I successfully updated this paragraph with JavaScript";
+} else {
+  console.error("Element with id 'myParagraph' not found.");
+}
+
+  </script>
+</body>
+</html>
